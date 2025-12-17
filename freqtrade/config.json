@@ -1,0 +1,77 @@
+{
+    "$schema": "https://schema.freqtrade.io/schema.json",
+    "max_open_trades": 6,
+    "stake_currency": "USDT",
+    "stake_amount": "unlimited",
+    "tradable_balance_ratio": 0.99,
+    "fiat_display_currency": "USD",
+    "timeframe": "5m",
+    "dry_run": true,
+    "cancel_open_orders_on_exit": false,
+    
+    // NFI works best with these specific timeouts
+    "unfilledtimeout": {
+        "entry": 3,
+        "exit": 5,
+        "unit": "minutes"
+    },
+
+    "entry_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+
+    "exit_pricing": {
+        "price_side": "same",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+
+    "exchange": {
+        "name": "binance",
+        "key": "${FREQTRADE__EXCHANGE__KEY}",
+        "secret": "${FREQTRADE__EXCHANGE__SECRET}",
+        "ccxt_config": {"enableRateLimit": true},
+        "ccxt_async_config": {
+            "enableRateLimit": true
+        },
+        "pair_whitelist": [
+            "ADA/USDT", "ALGO/USDT", "ATOM/USDT", "AVAX/USDT", "BTC/USDT",
+            "DOT/USDT", "ETH/USDT", "LINK/USDT", "LTC/USDT", "MATIC/USDT",
+            "NEAR/USDT", "SOL/USDT", "XRP/USDT"
+        ],
+        "pair_blacklist": [
+            "BNB/.*", ".*(UP|DOWN|BULL|BEAR)/.*"
+        ]
+    },
+
+    // NFI settings require these to be true
+    "ignore_roi_if_entry_signal": true,
+    
+    "pairlists": [
+        {
+            "method": "VolumePairList",
+            "number_assets": 40,
+            "sort_key": "quoteVolume",
+            "min_value": 0,
+            "refresh_period": 1800,
+            "lookback_days": 1
+        }
+    ],
+
+    "api_server": {
+        "enabled": true,
+        "listen_ip_address": "0.0.0.0",
+        "listen_port": 8080,
+        "verbosity": "info",
+        "username": "freqtrader",
+        "password": "SetYourOwnPasswordHere"
+    },
+
+    "bot_name": "freqtrade_nfi",
+    "initial_state": "running",
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}
